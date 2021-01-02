@@ -12,7 +12,7 @@ class App(QWidget):
         # Basic Settings
         self.setWindowTitle("Webp to JPG")
         self.setGeometry(800, 400, 350, 350)
-        self.setWindowIcon(QtGui.QIcon('icon.png'))
+        self.setWindowIcon(QtGui.QIcon('icon.ico'))
         self.image_path = None
 
         # Create Browse button
