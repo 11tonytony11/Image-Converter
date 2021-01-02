@@ -2,7 +2,7 @@ import sys
 from PIL import Image
 from PyQt5 import QtGui
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, QLabel, QHBoxLayout, QVBoxLayout, QSizePolicy
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel, QHBoxLayout, QVBoxLayout, QFileDialog
 
 
 class App(QWidget):
@@ -41,10 +41,9 @@ class App(QWidget):
         self.setLayout(main_layout)
 
     def get_file(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.webp)")
-        self.label_image.setPixmap(QPixmap(fname[0]).scaled(400, 400))
-        self.image_path = fname[0]
-        print(fname[0])
+        file_name = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Images (*.webp)")
+        self.label_image.setPixmap(QPixmap(file_name[0]).scaled(400, 400))
+        self.image_path = file_name[0]
 
     def convert_file(self):
         im = Image.open(self.image_path).convert("RGB")
