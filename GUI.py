@@ -1,8 +1,8 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog, QGridLayout, QPushButton, \
-    QLabel, QTextEdit, QHBoxLayout, QVBoxLayout, QSizePolicy
+from PIL import Image
 from PyQt5 import QtGui
 from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog, QPushButton, QLabel, QHBoxLayout, QVBoxLayout, QSizePolicy
 
 
 class App(QWidget):
@@ -13,6 +13,7 @@ class App(QWidget):
         self.setWindowTitle("Webp to JPG")
         self.setGeometry(800, 400, 350, 350)
         self.setWindowIcon(QtGui.QIcon('icon.png'))
+        self.image_path = None
 
         # Create Browse button
         self.btn_browse = QPushButton("Browse")
@@ -20,7 +21,7 @@ class App(QWidget):
 
         # Create convert button
         self.btn_convert = QPushButton("Convert")
-        self.btn_convert.clicked.connect(self.get_file)
+        self.btn_convert.clicked.connect(self.convert_file)
 
         # Create image window
         self.label_image = QLabel("")
@@ -40,8 +41,14 @@ class App(QWidget):
         self.setLayout(main_layout)
 
     def get_file(self):
-        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.jpg *.gif)")
+        fname = QFileDialog.getOpenFileName(self, 'Open file', 'c:\\', "Image files (*.webp)")
         self.label_image.setPixmap(QPixmap(fname[0]).scaled(400, 400))
+        self.image_path = fname[0]
+        print(fname[0])
+
+    def convert_file(self):
+        im = Image.open(self.image_path).convert("RGB")
+        im.save(self.image_path.replace(".webp", ".jpg"), "jpeg")
 
 
 def main():
@@ -53,4 +60,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
